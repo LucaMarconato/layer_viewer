@@ -21,4 +21,4 @@ dependencies:
     - sphinx_rtd_theme
     - sphinxcontrib-apidoc 
     - sphinx-gallery 
-    - pyqt 
+    - PyQt5
