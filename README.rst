@@ -9,9 +9,6 @@ layer_viewer
 .. image:: https://img.shields.io/travis/DerThorsten/layer_viewer.svg
         :target: https://travis-ci.org/DerThorsten/layer_viewer
 
-.. image:: https://travis-ci.org/DerThorsten/layer_viewer.svg?branch=master
-    :target: https://travis-ci.org/DerThorsten/layer_viewer
-
 .. image:: https://circleci.com/gh/DerThorsten/layer_viewer/tree/master.svg?style=svg
     :target: https://circleci.com/gh/DerThorsten/layer_viewer/tree/master
 

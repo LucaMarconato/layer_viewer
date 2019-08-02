@@ -12,8 +12,8 @@ with open('README.rst') as readme_file:
 requirements = [
     'click>=6.0',
     'pyqtgraph',
-    'PyQt5'
-    'numpy',
+    'PyQt5',
+    'numpy'
 ]
 
 needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
