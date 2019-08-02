@@ -5,11 +5,19 @@ channels:
   - conda-forge
 dependencies:
   - python >=3.6
-  - sphinx 
-  - sphinx_rtd_theme
-  - sphinxcontrib-apidoc 
-  - sphinx-gallery 
+  # - sphinx 
+  # - sphinx_rtd_theme
+  # - sphinxcontrib-apidoc 
+  # - sphinx-gallery 
   # actual dependencies
-  - pyqtgraph
-  - numpy
-  - scikit-image
+  # - pyqtgraph
+  # - numpy
+  # - scikit-image
+  pip:
+    - pyqtgraph
+    - numpy
+    - scikit-image
+    - sphinx 
+    - sphinx_rtd_theme
+    - sphinxcontrib-apidoc 
+    - sphinx-gallery 
