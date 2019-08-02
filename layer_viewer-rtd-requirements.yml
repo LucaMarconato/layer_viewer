@@ -13,7 +13,7 @@ dependencies:
   # - pyqtgraph
   # - numpy
   # - scikit-image
-  pip:
+  - pip:
     - pyqtgraph
     - numpy
     - scikit-image
