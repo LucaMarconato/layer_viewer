@@ -1,0 +1,21 @@
+name: layer_viewer-dev-requirements
+
+channels:
+  - anaconda
+  - conda-forge
+dependencies:
+  - make
+  - python >=3.6
+  - pytest
+  - pytest-qt
+  - coverage
+  - pip
+  - sphinx 
+  - sphinx_rtd_theme
+  - sphinxcontrib-apidoc 
+  - sphinx-gallery 
+  - flake8
+  # actual dependencies
+  - pyqtgraph
+  - numpy
+  - scikit-image
