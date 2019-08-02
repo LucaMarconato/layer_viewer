@@ -16,6 +16,6 @@ dependencies:
   - flake8
   # actual dependencies
   - pyqtgraph
-  - pyqt5
+  - pyqt
   - numpy
   - scikit-image
