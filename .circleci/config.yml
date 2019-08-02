@@ -8,7 +8,7 @@ variables:
       name: install opengl
       command: |
         apt update
-        apt install libgl1-mesa-glx
+        apt install -y libgl1-mesa-glx
 
   install_conda_build_and_cookiecutter: &install_conda_build_and_cookiecutter
     run:
