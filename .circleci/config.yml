@@ -3,6 +3,13 @@ variables:
 
 
 
+  apt_install_opengl: &apt_install_opengl
+    run:
+      name: install opengl
+      command: |
+        apt update
+        apt install libgl1-mesa-glx
+
   install_conda_build_and_cookiecutter: &install_conda_build_and_cookiecutter
     run:
       name: Config and Update Conda
@@ -68,6 +75,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - *apt_install_opengl
       - *update_conda
       - *run_test_script
 
