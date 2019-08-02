@@ -110,7 +110,7 @@ workflows:
   my_test:
     jobs:
       - test_job
-      - test_conda_build_job
+      #- test_conda_build_job
       - deploy_pypi_job:
           requires:
             - test_job
