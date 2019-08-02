@@ -12,6 +12,7 @@ with open('README.rst') as readme_file:
 requirements = [
     'click>=6.0',
     'pyqtgraph',
+    'PyQt5'
     'numpy',
 ]
 
