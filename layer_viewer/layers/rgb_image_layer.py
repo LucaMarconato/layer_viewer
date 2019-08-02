@@ -35,10 +35,7 @@ class RGBImageLayer(LayerBase):
         self.m_ctrl_widget =  LayerItemWidget(name=self.name, add_gradient_widgtet=False)
         self.viewer = None
 
-    def ctrl_widget(self):
-        #print("ctrl")
-        w = self.m_ctrl_widget
-        w.toggleEye.setActive(True)
+        self.m_ctrl_widget.toggleEye.setActive(True)
 
         def toogleEyeChanged(state):
             if self.viewer.m_exlusive_layer is not None:
@@ -50,10 +47,13 @@ class RGBImageLayer(LayerBase):
                 self.setVisible(bool(state))
         
 
-        w.toggleEye.stateChanged.connect(toogleEyeChanged)
-        w.bar.fractionChanged.connect(self.setOpacity)  
-        w.layer = self
-        return w
+        self.m_ctrl_widget.toggleEye.stateChanged.connect(toogleEyeChanged)
+        self.m_ctrl_widget.bar.fractionChanged.connect(self.setOpacity)  
+        self.m_ctrl_widget.layer = self
+        
+
+    def ctrl_widget(self):
+        return self.m_ctrl_widget
 
     def get_image_item(self):
         return self.m_image_item

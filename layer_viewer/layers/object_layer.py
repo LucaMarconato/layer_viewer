@@ -46,17 +46,8 @@ class ObjectLayer(LayerBase):
         #self.m_ctrl_widget.setLut(lut)
         self.viewer = None
 
-    def _apply_lut(self, image):
-        image = image.astype('int64')
-        img = numpy.take(self.lut, image, axis=0, mode='clip').astype('uint8')
-        #img = numpy.rollaxis(img,0,3)
-        #print("img after lut",img.shape)
-        return img
-
-    def ctrl_widget(self):
-        #print("ctrl")
-        w = self.m_ctrl_widget
-        w.toggleEye.setActive(True)
+        # ctrl 
+        self.m_ctrl_widget.toggleEye.setActive(True)
 
         def toogleEyeChanged(state):
             if self.viewer.m_exlusive_layer is not None:
@@ -68,27 +59,26 @@ class ObjectLayer(LayerBase):
                 self.setVisible(bool(state))
         
 
-        w.toggleEye.stateChanged.connect(toogleEyeChanged)
+        self.m_ctrl_widget.toggleEye.stateChanged.connect(toogleEyeChanged)
 
-        w.bar.fractionChanged.connect(self.setOpacity)  
+        self.m_ctrl_widget.bar.fractionChanged.connect(self.setOpacity)  
 
-        w.layer = self
-        return w
+        self.m_ctrl_widget.layer = self
+
+
+
+    def _apply_lut(self, image):
+        image = image.astype('int64')
+        img = numpy.take(self.lut, image, axis=0, mode='clip').astype('uint8')
+        #img = numpy.rollaxis(img,0,3)
+        #print("img after lut",img.shape)
+        return img
+
+    def ctrl_widget(self):
+        return self.m_ctrl_widget
 
     def get_image_item(self):
         return self.m_image_item
-
-    def setOpacity(self, opacity):
-        self.m_ctrl_widget.setFraction(opacity)
-        self.m_image_item.setOpacity(opacity)
-
-    def setVisible(self, visible):
-        self.m_ctrl_widget.toggleEye.setState(visible)
-        self.m_image_item.setVisible(visible)
-
-
-    def setZValue(self, z):
-        self.m_image_item.setZValue(z)
 
     def updateData(self, image):
         self.m_image_item.updateImage(self._apply_lut(image))

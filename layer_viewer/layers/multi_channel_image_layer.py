@@ -104,9 +104,6 @@ class MultiChannelImageLayer(LayerBase):
      
 
         w.asRgb.stateChanged.connect(asRgbChanged)
-
-
-
         w.bar.fractionChanged.connect(self.setOpacity)  
 
         def update():
@@ -118,23 +115,11 @@ class MultiChannelImageLayer(LayerBase):
 
 
     def ctrl_widget(self):
-
         return self.m_ctrl_widget
 
     def get_image_item(self):
         return self.m_image_item
 
-    def setOpacity(self, opacity):
-        self.m_ctrl_widget.setFraction(opacity)
-        self.m_image_item.setOpacity(opacity)
-
-    def setVisible(self, visible):
-        self.m_ctrl_widget.toggleEye.setState(visible)
-        self.m_image_item.setVisible(visible)
-
-
-    def setZValue(self, z):
-        self.m_image_item.setZValue(z)
 
     def updateData(self, image):
         self.m_data = image

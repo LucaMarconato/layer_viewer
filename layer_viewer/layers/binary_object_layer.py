@@ -50,15 +50,9 @@ class BinaryObjectLayer(LayerBase):
         #self.m_ctrl_widget.setLut(lut)
         self.viewer = None
 
-    def _apply_lut(self, image):
-        image = image.astype('int64')
-        img = numpy.take(self.lut, image, axis=0, mode='clip').astype('uint8')
-        return img
-
-    def ctrl_widget(self):
 
         w = self.m_ctrl_widget
-        w.toggleEye.setActive(True)
+        self.m_ctrl_widget.toggleEye.setActive(True)
 
         def toogleEyeChanged(state):
             if self.viewer.m_exlusive_layer is not None:
@@ -70,12 +64,20 @@ class BinaryObjectLayer(LayerBase):
                 self.setVisible(bool(state))
         
 
-        w.toggleEye.stateChanged.connect(toogleEyeChanged)
+        self.m_ctrl_widget.toggleEye.stateChanged.connect(toogleEyeChanged)
 
-        w.bar.fractionChanged.connect(self.setOpacity)  
+        self.m_ctrl_widget.bar.fractionChanged.connect(self.setOpacity)  
 
-        w.layer = self
-        return w
+        self.m_ctrl_widget.layer = self
+
+    def _apply_lut(self, image):
+        image = image.astype('int64')
+        img = numpy.take(self.lut, image, axis=0, mode='clip').astype('uint8')
+        return img
+
+    def ctrl_widget(self):
+        return self.m_ctrl_widget
+      
 
     def get_image_item(self):
         return self.m_image_item

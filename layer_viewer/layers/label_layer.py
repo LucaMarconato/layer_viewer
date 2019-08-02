@@ -239,22 +239,7 @@ class LabelLayer(LayerBase):
         #self.m_ctrl_widget.setLut(lut)
         self.viewer = None
 
-    def _set_pen(self):
-        fac = [1,3][self.current_label == 0]
-        if self.current_label == 0:
-            color = (0,0,0, 255.0 * 0.7)
-        else:
-            color = self.lut[self.current_label,:]
-        p = pg.mkPen(color=color, width=fac*self.disk_rad*2 + 1,cosmetic=False)
-        p.setCapStyle(QtCore.Qt.RoundCap)
-        self.m_temp_path.setPen(p)
-
-    def setNumClasses(self, num_classes):
-        self.m_ctrl_widget.setNumClasses(num_classes)
-
-
-    def ctrl_widget(self):
-        #print("ctrl")
+  
         w = self.m_ctrl_widget
 
         # toggle eye
@@ -270,13 +255,13 @@ class LabelLayer(LayerBase):
         w.toggleEye.stateChanged.connect(toogleEyeChanged)
 
         # opacity
-        w.bar.fractionChanged.connect(self.setOpacity)  
+        self.m_ctrl_widget.bar.fractionChanged.connect(self.setOpacity)  
 
         # current label
         def onLabelChange(label):
             self.current_label = label
             self._set_pen()
-        w.labelSelector.valueChanged.connect(onLabelChange)
+        self.m_ctrl_widget.labelSelector.valueChanged.connect(onLabelChange)
 
 
         # current label
@@ -284,11 +269,27 @@ class LabelLayer(LayerBase):
             #print('disk_rad', disk_rad)
             self.disk_rad = disk_rad
             self._set_pen()
-        w.brushSelector.valueChanged.connect(onDiskSizeChange)
+        self.m_ctrl_widget.brushSelector.valueChanged.connect(onDiskSizeChange)
 
 
-        w.layer = self
-        return w
+        self.m_ctrl_widget.layer = self
+
+    def _set_pen(self):
+        fac = [1,3][self.current_label == 0]
+        if self.current_label == 0:
+            color = (0,0,0, 255.0 * 0.7)
+        else:
+            color = self.lut[self.current_label,:]
+        p = pg.mkPen(color=color, width=fac*self.disk_rad*2 + 1,cosmetic=False)
+        p.setCapStyle(QtCore.Qt.RoundCap)
+        self.m_temp_path.setPen(p)
+
+    def setNumClasses(self, num_classes):
+        self.m_ctrl_widget.setNumClasses(num_classes)
+
+
+    def ctrl_widget(self):
+        return self.m_ctrl_widget
 
     def get_image_item(self):
         return self.m_image_item_group
@@ -303,18 +304,6 @@ class LabelLayer(LayerBase):
         self._set_pen()
         self.m_ctrl_widget.brushSelector.setValue(rad)
 
-    def setOpacity(self, opacity):
-        self.m_ctrl_widget.setFraction(opacity)
-        self.m_image_item_group.setOpacity(opacity)
-
-
-    def setVisible(self, visible):
-        self.m_ctrl_widget.toggleEye.setState(visible)
-        self.m_image_item_group.setVisible(visible)
-
-
-    def setZValue(self, z):
-        self.m_image_item_group.setZValue(z)
 
     def updateData(self, image):
         self.m_label_data = image
