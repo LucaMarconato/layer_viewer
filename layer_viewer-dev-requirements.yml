@@ -8,6 +8,7 @@ dependencies:
   - python >=3.6
   - pytest
   - pytest-qt
+  - pytest-xvfb
   - coverage
   - sphinx 
   - sphinx_rtd_theme

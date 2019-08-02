@@ -25,7 +25,8 @@ setup_requirements = [
 
 test_requirements = [
     'pytest',
-    'pytest-qt'
+    'pytest-qt',
+    'pytest-xvfb',
     'coverage',
     'flake8'
 ]
