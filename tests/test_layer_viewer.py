@@ -16,8 +16,8 @@ def test_layer_viewer_widget(qtbot):
     layer = MultiChannelImageLayer(name='img', data=image[...])
     viewer.addLayer(layer=layer)
 
-    assert layer.hasLayer('img')
-    assert layer.hasLayer('labels') == False
+    assert viewer.hasLayer('img')
+    assert viewer.hasLayer('labels') == False
 
 
     labels = numpy.zeros(image.shape[0:2], dtype='uint8')
@@ -25,5 +25,5 @@ def test_layer_viewer_widget(qtbot):
     viewer.addLayer(layer=label_layer)
     viewer.setData('labels',image=labels)
 
-    assert layer.hasLayer('img')
-    assert layer.hasLayer('labels')
+    assert viewer.hasLayer('img')
+    assert viewer.hasLayer('labels')
