@@ -39,13 +39,13 @@ script:
 # to install the travis cmd tool try
 # $ gem install travis
 # (https://docs.travis-ci.com/user/encryption-keys/)
-# deploy:
-#   provider: pypi
-#   distributions: sdist bdist_wheel
-#   user: DerThorsten
-#   password:
-#     secure: PLEASE_REPLACE_ME
-#   on:
-#     tags: true
-#     repo: DerThorsten/layer_viewer
-#     python: 3.7
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: DerThorsten
+  password:
+    secure: ijfR7l9Y0lPwQEeaKmVgZ2vcL0iJmVLM4d7kaI/kZxXYLvP6us0e1lPs5w5eK7eSl6SiumJTN+9kwa400O7EqM3tUCu95Zuf9w+Gdn0gm6ofnm5cKgrr62z5+XGDmna0qP/R8sBylLFtLr6tQMzrXSpm4yy2pFz8zCdiOfiY/rE6VozuOS2/ILI8r5xSA5GwCej/I2Do77alSeJIdGR2DlD2zCwY+dUAgnGzJ1anF93iZzZ1iPJt6funX61bjsQXyEFkz5OnwZiJPOr8WZED8V+4jzPYF/mwsqclCIFq7XBtuOzjucD1leM4ue7vlo2L35AtD5a7rKDSYz3Ph/MpaWkSF+9v2GQ4J9NjOXwnLnB2fRpOzntEB0B2toAaSC7fsQtwm/pAB6dcwTkHzpQe0kV+2R8tIRx3mHZvuKc6bhG/9livA6Hs3uj4BOEFgIMnmcDM9NWkEyvhh67dz4FkiX6UaCRRv9lOoevXrcawE3RjF6vLWhks/YJz+BtI/TaMaz+1pId+CKrFO9XnrhlDldX1eJLEHCGENZj4r+T84kEPk9hM/9RZcsKXs5LHYe8yszDIaECK01Qg0MGFlcXz0MU6XB4WkfCzkq6EbM3ylUxmzuDFC3tCCOj0OXLRpk+bXboZe8UHrb+zhrP2NYnBAZJ5ghJx+vBp/N5P3KiyNdE=
+  on:
+    tags: true
+    repo: DerThorsten/layer_viewer
+    python: 3.7
