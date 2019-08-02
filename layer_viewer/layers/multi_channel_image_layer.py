@@ -145,7 +145,6 @@ class MultiChannelImageLayer(LayerBase):
         self.m_data = image
         
         if image is None:
-            print("N)OO")
             self.m_image_item.clear()
             # self.m_image_item.setImage(None, autoLevels=self.m_autoLevels, 
             #         levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)

@@ -30,7 +30,6 @@ class ObjectLayer(LayerBase):
             lut[:,3] = 255
             if with_background:
                 lut[0,3] = 0
-            #print(lut.shape)
             self.lut = lut.astype('int64')
 
         self.m_data = data
