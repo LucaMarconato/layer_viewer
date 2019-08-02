@@ -3,7 +3,7 @@
 """Console script for layer_viewer."""
 import sys
 import click
-from .. version import __version__
+from ..version import __version__
 
 
 @click.group()
@@ -11,7 +11,7 @@ def cli():
     pass
 
 
-@cli.command(help='Show version and exit')
+@cli.command(help="Show version and exit")
 def version():
     click.echo(__version__)
 

@@ -3,23 +3,25 @@ import os
 from pyqtgraph.Qt import QtCore, QtGui
 
 
-class ToggleEye( QtGui.QLabel ):
-    activeChanged = QtCore.pyqtSignal( bool )
+class ToggleEye(QtGui.QLabel):
+    activeChanged = QtCore.pyqtSignal(bool)
 
-    def __init__( self, parent=None ):
-        super(ToggleEye, self).__init__( parent=parent )
+    def __init__(self, parent=None):
+        super(ToggleEye, self).__init__(parent=parent)
         self._active = True
 
         path = os.path.dirname(os.path.abspath(__file__))
 
-        self._eye_open = QtGui.QPixmap(os.path.join(path,"icons/stock-eye-20.png"))
-        self._eye_closed = QtGui.QPixmap(os.path.join(path,"icons/stock-eye-20-gray.png"))
+        self._eye_open = QtGui.QPixmap(os.path.join(path, "icons/stock-eye-20.png"))
+        self._eye_closed = QtGui.QPixmap(
+            os.path.join(path, "icons/stock-eye-20-gray.png")
+        )
         self.setPixmap(self._eye_open)
 
-    def active( self ):
+    def active(self):
         return self._active
 
-    def setActive( self, b ):
+    def setActive(self, b):
         if b == self._active:
             return
         self._active = b
@@ -28,34 +30,38 @@ class ToggleEye( QtGui.QLabel ):
         else:
             self.setPixmap(self._eye_closed)
 
-    def toggle( self ):
+    def toggle(self):
         if self.active():
-            self.setActive( False )
+            self.setActive(False)
         else:
-            self.setActive( True )
+            self.setActive(True)
 
-    def mousePressEvent( self, ev ):
+    def mousePressEvent(self, ev):
         self.toggle()
-        self.activeChanged.emit( self._active )
+        self.activeChanged.emit(self._active)
 
 
-class TrippleToggleEye( QtGui.QLabel ):
-    stateChanged = QtCore.pyqtSignal( int )
+class TrippleToggleEye(QtGui.QLabel):
+    stateChanged = QtCore.pyqtSignal(int)
 
-    def __init__( self, parent=None ):
-        super(TrippleToggleEye, self).__init__( parent=parent )
+    def __init__(self, parent=None):
+        super(TrippleToggleEye, self).__init__(parent=parent)
 
         self._state = 1
         path = os.path.dirname(os.path.abspath(__file__))
 
-        self._eye_open = QtGui.QPixmap(os.path.join(path,"icons/stock-eye-20.png"))
-        self._eye_closed = QtGui.QPixmap(os.path.join(path,"icons/stock-eye-20-gray.png"))
-        self._eye_open_exclusive = QtGui.QPixmap(os.path.join(path,"icons/stock-eye-green.png")) 
+        self._eye_open = QtGui.QPixmap(os.path.join(path, "icons/stock-eye-20.png"))
+        self._eye_closed = QtGui.QPixmap(
+            os.path.join(path, "icons/stock-eye-20-gray.png")
+        )
+        self._eye_open_exclusive = QtGui.QPixmap(
+            os.path.join(path, "icons/stock-eye-green.png")
+        )
 
         self._state_to_pixmap = {
-            0 : self._eye_closed ,
-            1 : self._eye_open,
-            2 : self._eye_open_exclusive
+            0: self._eye_closed,
+            1: self._eye_open,
+            2: self._eye_open_exclusive,
         }
         self.setPixmap(self._eye_open)
         self.last = 1
@@ -65,7 +71,7 @@ class TrippleToggleEye( QtGui.QLabel ):
 
     def mouseDoubleClickEvent(self, event):
         self.last = 2
-    
+
     def setState(self, state):
         if state != self._state:
             self._state = state
@@ -78,7 +84,7 @@ class TrippleToggleEye( QtGui.QLabel ):
         return self._state
 
     def mouseReleaseEvent(self, event):
-    
+
         if self.last == 1:
             if self._state == 0:
                 self._state = 1
@@ -87,7 +93,7 @@ class TrippleToggleEye( QtGui.QLabel ):
                 self._state = 0
         else:
             self._state = 2
-            
+
         self.setPixmap(self._state_to_pixmap[self._state])
-        #print("emit change ",self._state)
-        self.stateChanged.emit( self._state )
+        # print("emit change ",self._state)
+        self.stateChanged.emit(self._state)

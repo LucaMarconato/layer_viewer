@@ -10,7 +10,6 @@ class DrangAndDropListWidget(QtGui.QListWidget):
         # Enable drag & drop ordering of items.
         self.setDragDropMode(QtGui.QAbstractItemView.InternalMove)
 
-
     def on_rowsInserted(self, parent_index, start, end):
         pass
 
@@ -18,7 +17,7 @@ class DrangAndDropListWidget(QtGui.QListWidget):
         pass
         super(DrangAndDropListWidget, self).dragEnterEvent(e)
 
-    def dropEvent(self, e): 
+    def dropEvent(self, e):
         pass
         super(DrangAndDropListWidget, self).dropEvent(e)
 
@@ -27,10 +26,8 @@ class DrangAndDropListWidget(QtGui.QListWidget):
             item = self.item(i)
             w = self.itemWidget(item)
             layer = w.layer
-            #layer.setZValue(n - 1 - i)
-            layer.setZValue( i)
-
-
+            # layer.setZValue(n - 1 - i)
+            layer.setZValue(i)
 
 
 class LayerCtrlWidget(QtGui.QWidget):
@@ -40,7 +37,7 @@ class LayerCtrlWidget(QtGui.QWidget):
         self.widget_layout = QtGui.QVBoxLayout()
 
         self.list_widget = DrangAndDropListWidget(parent=self)
-        #self.list_widget.horizontalScrollBar().setDisabled(True);
+        # self.list_widget.horizontalScrollBar().setDisabled(True);
         self.widget_layout.addWidget(self.list_widget)
         self.setLayout(self.widget_layout)
         self.n_layers = 0
@@ -50,10 +47,7 @@ class LayerCtrlWidget(QtGui.QWidget):
         qIndex = self.list_widget.indexFromItem(_list_widget_item)
         self.list_widget.model().removeRow(qIndex.row())
 
-
-
     def add_layer(self, layer):
-
 
         w = layer.ctrl_widget()
         w.toggleEye.setActive(True)
@@ -63,18 +57,20 @@ class LayerCtrlWidget(QtGui.QWidget):
         self.list_widget.addItem(myQListWidgetItem)
         self.list_widget.setItemWidget(myQListWidgetItem, w)
 
-        #w.toggleEye.activeChanged.connect(layer.setVisible)
-        #w.bar.fractionChanged.connect(layer.setOpacity)
+        # w.toggleEye.activeChanged.connect(layer.setVisible)
+        # w.bar.fractionChanged.connect(layer.setOpacity)
 
         self.n_layers += 1
 
     def dragEnterEvent(self, item):
-      pass
+        pass
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import sys
+
     app = QtGui.QApplication(sys.argv)
     widget = LayerCtrlWidget()
     widget.show()
 
-    sys.exit(app.exec_())  
+    sys.exit(app.exec_())
