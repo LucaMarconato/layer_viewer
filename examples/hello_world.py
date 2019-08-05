@@ -27,13 +27,13 @@ viewer.setWindowTitle('LayerViewer')
 viewer.show()
 
 layer = MultiChannelImageLayer(name='img', data=image[...])
-viewer.addLayer(layer=layer)
+viewer.add_layer(layer=layer)
 
 
 labels = numpy.zeros(image.shape[0:2], dtype='uint8')
 label_layer = LabelLayer(name='labels', data=None)
-viewer.addLayer(layer=label_layer)
-viewer.setData('labels',image=labels)
+viewer.add_layer(layer=label_layer)
+viewer.set_data('labels', image=labels)
 
 
 # connect stuff

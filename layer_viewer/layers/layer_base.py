@@ -1,4 +1,5 @@
-from pyqtgraph.Qt import QtCore, QtGui
+from pyqtgraph.Qt import QtCore
+
 
 class LayerBase(QtCore.QObject):
 
@@ -7,7 +8,5 @@ class LayerBase(QtCore.QObject):
         self.name = name
         self.viewer = None
 
-
-    def updateData(self, *args, **kargs):
-        raise NotImplementedError("updateData must be implemented")
-
+    def update_data(self, *args, **kargs):
+        raise NotImplementedError("update_data must be implemented")
