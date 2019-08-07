@@ -1,7 +1,11 @@
-from pyqtgraph.Qt import QtGui
+# from pyqtgraph.Qt import QtGui
+from PyQt5 import QtGui
+import PyQt5.QtCore as qt
+from PyQt5.QtWidgets import QWidget
 from pyqtgraph.dockarea import *
 
 from .layer_ctrl_widget import LayerCtrlWidget
+from .layer_plot_widget import LayerPlotWidget
 from .layer_view_widget import LayerViewWidget
 from .settings_widget import SettingsWidget
 
@@ -12,33 +16,77 @@ class LayerViewerWidget(QtGui.QWidget):
 
         # for backward compatibility
         self.addLayer = self.add_layer
+
+        # this is the layout
+        # |-------|------|
+        # |       | ctrl |
+        # | image |------|
+        # |       | plot |
+        # |-------|------|
         self.m_hbox = QtGui.QHBoxLayout()
+        self.m_vhbox = QtGui.QVBoxLayout()
         self.setLayout(self.m_hbox)
 
         self.settings_widget = SettingsWidget()
         self.m_layer_view_widget = LayerViewWidget(settings_widget=self.settings_widget)
         self.m_layer_ctrl_widget = LayerCtrlWidget()
+        self.m_layer_plot_widget = LayerPlotWidget()
 
-        gui_style = 'dock'
+        # gui_style = 'dock'
         if gui_style == 'dock':
             self.area = DockArea()
             self.m_hbox.addWidget(self.area)
-            d_view = Dock("Viewer", size=(500, 500))
-            d_ctrl = Dock("Ctrl", size=(200, 500))
+            d_view = Dock('Viewer', size=(500, 500))
+            d_ctrl = Dock('Ctrl', size=(200, 300))
+            d_plot = Dock('Plot', size=(200, 200))
             d_view.addWidget(self.m_layer_view_widget)
             d_ctrl.addWidget(self.m_layer_ctrl_widget)
             self.area.addDock(d_view)
             self.area.addDock(d_ctrl, 'right', d_view)
 
+            print('warning: plot dock not yet')
+            # self.area.addDock(d_plot, 'below', d_ctrl)
+
+            # self.inner_area = DockArea()
+            # self.m_vhbox.addWidget(self.inner_area)
+            # self.inner_area.addDock(d_ctrl)
+            # self.inner_area.addDock(d_plot)
+            # self.outer_area = DockArea()
+            # self.m_hbox.addWidget(self.outer_area)
+            # d_ctrl = Dock('Ctrl', size=(200, 500))
+            # d_view = Dock('Viewer', size=(500, 500))
+            # d_view.addWidget(self.m_layer_view_widget)
+            # self.outer_area.addDock(d_view)
+            # self.outer_area.addDock(d_ctrl, 'right', d_view)
+            # self.outer_area.addDock(d_plot, 'below', d_ctrl)
+
         elif gui_style == 'splitter':
-            self.splitter = QtGui.QSplitter()
-            self.m_hbox.addWidget(self.splitter)
-            self.splitter.addWidget(self.m_layer_view_widget)
-            self.splitter.addWidget(self.m_layer_ctrl_widget)
+            self.inner_container = QWidget()
+            self.inner_container.setLayout(self.m_vhbox)
+            self.inner_splitter = QtGui.QSplitter()
+            self.inner_splitter.setOrientation(qt.Qt.Vertical)
+            self.m_vhbox.addWidget(self.inner_splitter)
+            self.inner_splitter.addWidget(self.m_layer_ctrl_widget)
+            self.inner_splitter.addWidget(self.m_layer_plot_widget)
+
+            self.outer_splitter = QtGui.QSplitter()
+            self.m_hbox.addWidget(self.outer_splitter)
+            self.outer_splitter.addWidget(self.m_layer_view_widget)
+            self.outer_splitter.addWidget(self.inner_container)
 
         self.m_layers = dict()
 
         self.m_exclusive_layer = None
+        self.showMaximized()
+
+    def axes(self):
+        return self.m_layer_plot_widget.axes()
+
+    def plot_canvas(self):
+        return self.m_layer_plot_widget.mpl_canvas
+
+    def draw_plot_canvas(self):
+        self.m_layer_plot_widget.mpl_canvas.draw()
 
     @property
     def view_box(self):
