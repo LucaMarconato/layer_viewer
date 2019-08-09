@@ -17,39 +17,39 @@ class LayerItemWidget(QWidget):
         self._fm = QFontMetrics(self._font)
         self.bar = FractionSelectionBar(initial_fraction=1.)
         self.bar.setFixedHeight(10)
-        self.nameLabel = QLabel(parent=self)
-        self.nameLabel.setFont(self._font)
-        self.nameLabel.setText(str(name))
-        self.opacityLabel = QLabel(parent=self)
-        self.opacityLabel.setAlignment(Qt.AlignRight)
-        self.opacityLabel.setFont(self._font)
-        self.opacityLabel.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
+        self.name_label = QLabel(parent=self)
+        self.name_label.setFont(self._font)
+        self.name_label.setText(str(name))
+        self.opacity_label = QLabel(parent=self)
+        self.opacity_label.setAlignment(Qt.AlignRight)
+        self.opacity_label.setFont(self._font)
+        self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
         self.toggle_eye = TripleToggleEye(parent=self)
         self.toggle_eye.setActive(True)
         self.toggle_eye.setFixedWidth(35)
         self.toggle_eye.setToolTip("Visibility")
 
-        self.channelSelector = QSpinBox(parent=self)
-        self.channelSelector.setFrame(False)
-        self.channelSelector.setFont(self._font)
-        self.channelSelector.setMaximumWidth(35)
-        self.channelSelector.setAlignment(Qt.AlignRight)
-        self.channelSelector.setToolTip("Channel")
-        self.channelSelector.setVisible(channel_selector)
+        self.channel_selector = QSpinBox(parent=self)
+        self.channel_selector.setFrame(False)
+        self.channel_selector.setFont(self._font)
+        self.channel_selector.setMaximumWidth(35)
+        self.channel_selector.setAlignment(Qt.AlignRight)
+        self.channel_selector.setToolTip("Channel")
+        self.channel_selector.setVisible(channel_selector)
 
         self._layout = QtGui.QGridLayout(self)
         self._layout.addWidget(self.toggle_eye, 0, 0)
-        self._layout.addWidget(self.nameLabel, 0, 1)
-        self._layout.addWidget(self.opacityLabel, 0, 2)
-        self._layout.addWidget(self.channelSelector, 1, 0)
+        self._layout.addWidget(self.name_label, 0, 1)
+        self._layout.addWidget(self.opacity_label, 0, 2)
+        self._layout.addWidget(self.channel_selector, 1, 0)
 
         self._layout.addWidget(self.bar, 1, 1, 1, 2)
 
         if add_gradient_widgtet:
-            self.gradientWidget = GradientWidget(orientation='top')
-            self.gradientWidget.load_preset('grey')
-            self._layout.addWidget(self.gradientWidget, 3, 1, 1, 2)
+            self.gradient_widget = GradientWidget(orientation='top')
+            self.gradient_widget.load_preset('grey')
+            self._layout.addWidget(self.gradient_widget, 3, 1, 1, 2)
 
         # if add_as_rgb_button:
         #     self.asRgb = QCheckBox(  )
@@ -59,23 +59,23 @@ class LayerItemWidget(QWidget):
         #     self.asRgb.setAlignment(Qt.AlignRight)
         #     self.asRgb.setToolTip("Show As RGB")
         #     #self.asRgb.setVisible(channel_selector)
-        #     self._layout.addWidget( self.gradientWidget, 3,0,1,2)
+        #     self._layout.addWidget( self.gradient_widget, 3,0,1,2)
 
         self._layout.setColumnMinimumWidth(2, 35)
         self._layout.setSpacing(0)
         self.setLayout(self._layout)
 
         def f(frac):
-            self.opacityLabel.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
+            self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
         self.bar.fractionChanged.connect(f)
 
     def setFraction(self, opacity):
         self.bar.set_fraction(opacity)
-        self.opacityLabel.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
+        self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
-    def setName(self, name):
-        self.nameLabel.setText(str(name))
+    def set_name(self, name):
+        self.name_label.setText(str(name))
 
     def mousePressEvent(self, ev):
         super(LayerItemWidget, self).mousePressEvent(ev)

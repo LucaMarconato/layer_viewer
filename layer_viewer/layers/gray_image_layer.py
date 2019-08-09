@@ -1,18 +1,18 @@
 from .layer_base import LayerBase
 from .layer_controller import *
-
+import pyqtgraph as pg
 
 class GrayImageLayer(LayerBase):
     def __init__(self, name, data=None, auto_levels=True, levels=None, auto_histogram_range=False, cmap=None):
         super(GrayImageLayer, self).__init__(name=name)
 
         self.m_data = data
-        self.m_autoLevels = auto_levels
+        self.m_auto_levels = auto_levels
         self.m_levels = levels
-        self.m_autoHistogramRange = auto_histogram_range
+        self.m_auto_histogram_range = auto_histogram_range
         self.m_image_item = pg.ImageItem()
         if self.m_data is not None:
-            self.m_image_item.setImage(self.m_data, autoLevels=self.m_autoLevels,
+            self.m_image_item.setImage(self.m_data, autoLevels=self.m_auto_levels,
                                        levels=self.m_levels)
 
         self.m_ctrl_widget = LayerItemWidget(name=self.name, add_gradient_widgtet=True)
@@ -20,7 +20,7 @@ class GrayImageLayer(LayerBase):
 
         self.cmap = cmap
         if self.cmap is not None:
-            self.m_ctrl_widget.gradientWidget.load_preset(self.cmap)
+            self.m_ctrl_widget.gradient_widget.load_preset(self.cmap)
 
     def ctrl_widget(self):
         w = self.m_ctrl_widget
@@ -40,10 +40,10 @@ class GrayImageLayer(LayerBase):
         w.bar.fractionChanged.connect(self.setOpacity)
 
         def update():
-            lut = w.gradientWidget.getLookupTable(512)
+            lut = w.gradient_widget.getLookupTable(512)
             self.m_image_item.setLookupTable(lut)
 
-        w.gradientWidget.sigGradientChanged.connect(update)
+        w.gradient_widget.sigGradientChanged.connect(update)
         w.layer = self
         return w
 
@@ -65,5 +65,5 @@ class GrayImageLayer(LayerBase):
         self.m_image_item.updateImage(image)
 
     def setData(self, image):
-        self.m_image_item.setImage(image, autoLevels=self.m_autoLevels,
-                                   levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
+        self.m_image_item.setImage(image, autoLevels=self.m_auto_levels,
+                                   levels=self.m_levels, autoHistogramRange=self.m_auto_histogram_range)

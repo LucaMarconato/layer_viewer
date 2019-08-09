@@ -32,12 +32,12 @@ class MultiChannelImageLayer(LayerBase):
 
         self.cmap = cmap
         if self.cmap is not None:
-            self.m_ctrl_widget.gradientWidget.load_preset(self.cmap)
+            self.m_ctrl_widget.gradient_widget.load_preset(self.cmap)
 
         # setup ctrl widget
         w = self.m_ctrl_widget
         if self.m_data is not None:
-            w.channelSelector.setRange(0, self.m_data.shape[2] - 1)
+            w.channel_selector.setRange(0, self.m_data.shape[2] - 1)
         w.toggle_eye.setActive(True)
         self.update_rgb_enabled()
 
@@ -59,18 +59,18 @@ class MultiChannelImageLayer(LayerBase):
                     self.m_image_item.setImage(self.m_data[..., self.current_channel], autoLevels=self.m_autoLevels,
                                                levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
 
-        w.channelSelector.valueChanged.connect(channel_changed)
+        w.channel_selector.valueChanged.connect(channel_changed)
 
         def as_rgb_changed(as_rgb):
             self.as_rgb = bool(as_rgb)
-            self.m_ctrl_widget.channelSelector.setEnabled(not self.as_rgb)
-            self.m_ctrl_widget.gradientWidget.setEnabled(not self.as_rgb)
+            self.m_ctrl_widget.channel_selector.setEnabled(not self.as_rgb)
+            self.m_ctrl_widget.gradient_widget.setEnabled(not self.as_rgb)
             if self.as_rgb:
                 self.m_image_item.setLookupTable(None)
                 self.m_image_item.setImage(self.m_data, autoLevels=self.m_autoLevels,
                                            levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
             else:
-                lut = w.gradientWidget.getLookupTable(512)
+                lut = w.gradient_widget.getLookupTable(512)
                 self.m_image_item.setLookupTable(lut)
                 self.m_image_item.setImage(self.m_data[..., self.current_channel], autoLevels=self.m_autoLevels,
                                            levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
@@ -80,10 +80,10 @@ class MultiChannelImageLayer(LayerBase):
         w.bar.fractionChanged.connect(self.setOpacity)
 
         def update():
-            lut = w.gradientWidget.getLookupTable(512)
+            lut = w.gradient_widget.getLookupTable(512)
             self.m_image_item.setLookupTable(lut)
 
-        w.gradientWidget.sigGradientChanged.connect(update)
+        w.gradient_widget.sigGradientChanged.connect(update)
         w.layer = self
 
     def ctrl_widget(self):
@@ -105,7 +105,7 @@ class MultiChannelImageLayer(LayerBase):
 
     def update_data(self, image):
         self.m_data = image
-        self.m_ctrl_widget.channelSelector.setRange(0, self.m_data.shape[2] - 1)
+        self.m_ctrl_widget.channel_selector.setRange(0, self.m_data.shape[2] - 1)
         self.m_image_item.updateImage(image[..., self.current_channel])
         self.update_rgb_enabled()
 
@@ -114,10 +114,10 @@ class MultiChannelImageLayer(LayerBase):
 
         if image is None:
             self.m_image_item.clear()
-            # self.m_image_item.setImage(None, autoLevels=self.m_autoLevels, 
-            #         levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
+            # self.m_image_item.setImage(None, autoLevels=self.m_auto_levels,
+            #         levels=self.m_levels, autoHistogramRange=self.m_auto_histogram_range)
         else:
-            self.m_ctrl_widget.channelSelector.setRange(0, self.m_data.shape[2] - 1)
+            self.m_ctrl_widget.channel_selector.setRange(0, self.m_data.shape[2] - 1)
 
             if self.as_rgb:
                 self.m_image_item.setImage(image, autoLevels=self.m_autoLevels,

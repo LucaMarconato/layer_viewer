@@ -93,7 +93,7 @@ class LayerViewerWidget(QtGui.QWidget):
         self.m_layers[layer_name].update_data(**kwargs)
 
     def set_data(self, layer_name, **kwargs):
-        self.m_layers[layer_name].set_data(**kwargs)
+        self.m_layers[layer_name].setData(**kwargs)
 
     def show_and_hide_others(self, layer_name):
         for ln in self.m_layers.keys():

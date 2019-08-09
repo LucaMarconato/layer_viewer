@@ -25,92 +25,92 @@ class LabelLayer(LayerBase):
             self._fm = QFontMetrics(self._font)
             self.bar = FractionSelectionBar(initial_fraction=1.)
             self.bar.setFixedHeight(10)
-            self.nameLabel = QLabel(parent=self)
-            self.nameLabel.setFont(self._font)
-            self.nameLabel.setText(str(name))
-            self.opacityLabel = QLabel(parent=self)
-            self.opacityLabel.setAlignment(Qt.AlignRight)
-            self.opacityLabel.setFont(self._font)
-            self.opacityLabel.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
+            self.name_label = QLabel(parent=self)
+            self.name_label.setFont(self._font)
+            self.name_label.setText(str(name))
+            self.opacity_label = QLabel(parent=self)
+            self.opacity_label.setAlignment(Qt.AlignRight)
+            self.opacity_label.setFont(self._font)
+            self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
             self.toggle_eye = TripleToggleEye(parent=self)
             self.toggle_eye.setActive(True)
             self.toggle_eye.setFixedWidth(35)
             self.toggle_eye.setToolTip("Visibility")
 
-            self.channelSelector = QSpinBox(parent=self)
-            self.channelSelector.setFrame(False)
-            self.channelSelector.setFont(self._font)
-            self.channelSelector.setMaximumWidth(35)
-            self.channelSelector.setAlignment(Qt.AlignRight)
-            self.channelSelector.setToolTip("Channel")
-            self.channelSelector.setVisible(False)
+            self.channel_selector = QSpinBox(parent=self)
+            self.channel_selector.setFrame(False)
+            self.channel_selector.setFont(self._font)
+            self.channel_selector.setMaximumWidth(35)
+            self.channel_selector.setAlignment(Qt.AlignRight)
+            self.channel_selector.setToolTip("Channel")
+            self.channel_selector.setVisible(False)
 
             self._layout = QtGui.QGridLayout(self)
             self._layout.addWidget(self.toggle_eye, 0, 0)
-            self._layout.addWidget(self.nameLabel, 0, 1)
-            self._layout.addWidget(self.opacityLabel, 0, 2)
-            self._layout.addWidget(self.channelSelector, 1, 0)
+            self._layout.addWidget(self.name_label, 0, 1)
+            self._layout.addWidget(self.opacity_label, 0, 2)
+            self._layout.addWidget(self.channel_selector, 1, 0)
 
             self._layout.addWidget(self.bar, 1, 1, 1, 2)
 
-            self.labelLabel = QLabel(parent=self)
-            self.labelLabel.setAlignment(Qt.AlignRight)
-            self.labelLabel.setFont(self._font)
-            self.labelLabel.setText("Label:")
-            self._layout.addWidget(self.labelLabel, 3, 0, 1, 1)
+            self.label_label = QLabel(parent=self)
+            self.label_label.setAlignment(Qt.AlignRight)
+            self.label_label.setFont(self._font)
+            self.label_label.setText("Label:")
+            self._layout.addWidget(self.label_label, 3, 0, 1, 1)
 
-            self.labelSelector = QSpinBox(parent=self)
-            self.labelSelector.setFrame(False)
-            self.labelSelector.setFont(self._font)
-            self.labelSelector.setMaximumWidth(35)
-            self.labelSelector.setAlignment(Qt.AlignRight)
-            self.labelSelector.setToolTip("Label")
-            self.labelSelector.setVisible(True)
-            self.labelSelector.setMinimum(0)
-            self.labelSelector.setMaximum(255)
-            self.labelSelector.setValue(current_label)
-            self._layout.addWidget(self.labelSelector, 3, 1, 1, 1)
+            self.label_selector = QSpinBox(parent=self)
+            self.label_selector.setFrame(False)
+            self.label_selector.setFont(self._font)
+            self.label_selector.setMaximumWidth(35)
+            self.label_selector.setAlignment(Qt.AlignRight)
+            self.label_selector.setToolTip("Label")
+            self.label_selector.setVisible(True)
+            self.label_selector.setMinimum(0)
+            self.label_selector.setMaximum(255)
+            self.label_selector.setValue(current_label)
+            self._layout.addWidget(self.label_selector, 3, 1, 1, 1)
 
-            self.brushLabel = QLabel(parent=self)
-            self.brushLabel.setAlignment(Qt.AlignRight)
-            self.brushLabel.setFont(self._font)
-            self.brushLabel.setText("Brush:")
-            self._layout.addWidget(self.brushLabel, 3, 2, 1, 1)
+            self.brush_label = QLabel(parent=self)
+            self.brush_label.setAlignment(Qt.AlignRight)
+            self.brush_label.setFont(self._font)
+            self.brush_label.setText("Brush:")
+            self._layout.addWidget(self.brush_label, 3, 2, 1, 1)
 
-            self.brushSelector = QSpinBox(parent=self)
-            self.brushSelector.setFrame(False)
-            self.brushSelector.setFont(self._font)
-            self.brushSelector.setMaximumWidth(35)
-            self.brushSelector.setAlignment(Qt.AlignRight)
-            self.brushSelector.setToolTip("Brush")
-            self.brushSelector.setVisible(True)
-            self.brushSelector.setMinimum(0)
-            self.brushSelector.setMaximum(255)
-            self.brushSelector.setValue(disc_rad)
-            self._layout.addWidget(self.brushSelector, 3, 3, 1, 1)
+            self.brush_selector = QSpinBox(parent=self)
+            self.brush_selector.setFrame(False)
+            self.brush_selector.setFont(self._font)
+            self.brush_selector.setMaximumWidth(35)
+            self.brush_selector.setAlignment(Qt.AlignRight)
+            self.brush_selector.setToolTip("Brush")
+            self.brush_selector.setVisible(True)
+            self.brush_selector.setMinimum(0)
+            self.brush_selector.setMaximum(255)
+            self.brush_selector.setValue(disc_rad)
+            self._layout.addWidget(self.brush_selector, 3, 3, 1, 1)
 
             self._layout.setColumnMinimumWidth(2, 35)
             self._layout.setSpacing(0)
             self.setLayout(self._layout)
 
             def f(frac):
-                self.opacityLabel.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
+                self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
             self.bar.fractionChanged.connect(f)
 
         def setFraction(self, opacity):
             self.bar.set_fraction(opacity)
-            self.opacityLabel.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
+            self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
-        def getCurrentLabel(self):
-            return self.labelSelector.value
+        def get_current_label(self):
+            return self.label_selector.value
 
-        def setNumClasses(self, setNumClasses):
-            self.labelSelector.setRange(0, setNumClasses)
+        def set_num_classes(self, setNumClasses):
+            self.label_selector.setRange(0, setNumClasses)
 
-        def setName(self, name):
-            self.nameLabel.setText(str(name))
+        def set_name(self, name):
+            self.name_label.setText(str(name))
 
         def mousePressEvent(self, ev):
             super(LabelLayer.CtrlWidget, self).mousePressEvent(ev)
@@ -165,14 +165,14 @@ class LabelLayer(LayerBase):
             for label in range(10):
                 if event.key() == getattr(QtCore.Qt, f"Key_{label}"):
                     if modifiers == QtCore.Qt.ControlModifier:
-                        self.label_layer.setCurrentDiskRadius(label)
+                        self.label_layer.set_current_disk_radius(label)
                     else:
-                        self.label_layer.setCurrentLabel(label)
+                        self.label_layer.set_current_label(label)
                     event.accept()
                     break
                 if event.key() == QtCore.Qt.Key_E:
                     if modifiers != QtCore.Qt.ControlModifier:
-                        self.label_layer.setCurrentLabel(0)
+                        self.label_layer.set_current_label(0)
                         event.accept()
 
     # we need a custom graphics item group to handle key interaction
@@ -233,8 +233,8 @@ class LabelLayer(LayerBase):
         p.setCapStyle(QtCore.Qt.RoundCap)
         self.m_temp_path.setPen(p)
 
-    def setNumClasses(self, num_classes):
-        self.m_ctrl_widget.setNumClasses(num_classes)
+    def set_num_classes(self, num_classes):
+        self.m_ctrl_widget.set_num_classes(num_classes)
 
     def ctrl_widget(self):
         # print("ctrl")
@@ -243,7 +243,7 @@ class LabelLayer(LayerBase):
         # toggle eye
         w.toggle_eye.setActive(True)
 
-        def toogleEyeChanged(state):
+        def toogle_eye_changed(state):
             if self.viewer.m_exclusive_layer is not None:
                 self.viewer.m_exclusive_layer.setVisible(True)
                 self.viewer.m_exclusive_layer = None
@@ -252,25 +252,25 @@ class LabelLayer(LayerBase):
             else:
                 self.setVisible(bool(state))
 
-        w.toggle_eye.stateChanged.connect(toogleEyeChanged)
+        w.toggle_eye.stateChanged.connect(toogle_eye_changed)
 
         # opacity
         w.bar.fractionChanged.connect(self.setOpacity)
 
         # current label
-        def onLabelChange(label):
+        def on_label_change(label):
             self.current_label = label
             self._set_pen()
 
-        w.labelSelector.valueChanged.connect(onLabelChange)
+        w.label_selector.valueChanged.connect(on_label_change)
 
         # current label
-        def onDiskSizeChange(disk_rad):
+        def on_disk_size_change(disk_rad):
             # print('disk_rad', disk_rad)
             self.disk_rad = disk_rad
             self._set_pen()
 
-        w.brushSelector.valueChanged.connect(onDiskSizeChange)
+        w.brush_selector.valueChanged.connect(on_disk_size_change)
 
         w.layer = self
         return w
@@ -278,15 +278,15 @@ class LabelLayer(LayerBase):
     def get_image_item(self):
         return self.m_image_item_group
 
-    def setCurrentLabel(self, label):
+    def set_current_label(self, label):
         self.current_label = label
         self._set_pen()
-        self.m_ctrl_widget.labelSelector.setValue(label)
+        self.m_ctrl_widget.label_selector.setValue(label)
 
-    def setCurrentDiskRadius(self, rad):
+    def set_current_disk_radius(self, rad):
         self.disc_rad = rad
         self._set_pen()
-        self.m_ctrl_widget.brushSelector.setValue(rad)
+        self.m_ctrl_widget.brush_selector.setValue(rad)
 
     def setOpacity(self, opacity):
         self.m_ctrl_widget.setFraction(opacity)
@@ -304,7 +304,7 @@ class LabelLayer(LayerBase):
         self.m_image_item.m_label_data = self.m_label_data
         self.m_image_item.updateImage((image))
 
-    def set_data(self, image):
+    def setData(self, image):
         self.m_label_data = image
         self.m_image_item.m_label_data = self.m_label_data
         self.m_image_item.setImage((image), autoLevels=False)
