@@ -69,6 +69,7 @@ class BinaryObjectLayer(LayerBase):
         self.m_image_item.setZValue(z)
 
     def update_data(self, image):
+        self.m_data = image
         self.m_image_item.updateImage(self._apply_lut(image))
 
     def setData(self, image):

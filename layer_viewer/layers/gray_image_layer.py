@@ -62,6 +62,7 @@ class GrayImageLayer(LayerBase):
         self.m_image_item.setZValue(z)
 
     def update_data(self, image):
+        self.m_data = image
         self.m_image_item.updateImage(image)
 
     def setData(self, image):
