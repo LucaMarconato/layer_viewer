@@ -1,10 +1,11 @@
 from builtins import range
 
 import pyqtgraph as pg
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtGui import QFontMetrics, QFont
-from PyQt5.QtWidgets import QWidget, QLabel, QSpinBox
-from pyqtgraph.Qt import QtCore
+from pyqtgraph.Qt import QtCore, QtGui, QtWidgets
+# from PyQt5.QtCore import pyqtSignal, Qt
+# from PyQt5.QtGui import QFontMetrics, QFont
+# from PyQt5.QtWidgets import QWidget, QLabel, QSpinBox
+# from pyqtgraph.Qt import QtCore
 
 from .layer_base import LayerBase
 from ..distinct_colors import *
@@ -13,22 +14,22 @@ from ..widgets import TripleToggleEye, FractionSelectionBar
 
 
 class LabelLayer(LayerBase):
-    labelsChangedSignal = pyqtSignal(object)
+    labelsChangedSignal = QtCore.pyqtSignal(object)
 
     # the gui for the user in the layer stack
-    class CtrlWidget(QWidget):
+    class CtrlWidget(QtWidgets.QWidget):
         def __init__(self, name=None, parent=None, current_label=1, disc_rad=1):
             super(LabelLayer.CtrlWidget, self).__init__(parent=parent)
             # self._layer = None
 
-            self._font = QFont(QFont().defaultFamily(), 9)
-            self._fm = QFontMetrics(self._font)
+            self._font = QtGui.QFont(QtGui.QFont().defaultFamily(), 9)
+            self._fm = QtGui.QFontMetrics(self._font)
             self.bar = FractionSelectionBar(initial_fraction=1.)
             self.bar.setFixedHeight(10)
-            self.name_label = QLabel(parent=self)
+            self.name_label = QtGui.QLabel(parent=self)
             self.name_label.setFont(self._font)
             self.name_label.setText(str(name))
-            self.opacity_label = QLabel(parent=self)
+            self.opacity_label = QtGui.QLabel(parent=self)
             self.opacity_label.setAlignment(Qt.AlignRight)
             self.opacity_label.setFont(self._font)
             self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
@@ -38,11 +39,11 @@ class LabelLayer(LayerBase):
             self.toggle_eye.setFixedWidth(35)
             self.toggle_eye.setToolTip("Visibility")
 
-            self.channel_selector = QSpinBox(parent=self)
+            self.channel_selector = QtGui.QSpinBox(parent=self)
             self.channel_selector.setFrame(False)
             self.channel_selector.setFont(self._font)
             self.channel_selector.setMaximumWidth(35)
-            self.channel_selector.setAlignment(Qt.AlignRight)
+            self.channel_selector.setAlignment(QtCore.Qt.AlignRight)
             self.channel_selector.setToolTip("Channel")
             self.channel_selector.setVisible(False)
 
@@ -54,13 +55,13 @@ class LabelLayer(LayerBase):
 
             self._layout.addWidget(self.bar, 1, 1, 1, 2)
 
-            self.label_label = QLabel(parent=self)
+            self.label_label = QtGui.QLabel(parent=self)
             self.label_label.setAlignment(Qt.AlignRight)
             self.label_label.setFont(self._font)
             self.label_label.setText("Label:")
             self._layout.addWidget(self.label_label, 3, 0, 1, 1)
 
-            self.label_selector = QSpinBox(parent=self)
+            self.label_selector = QtGui.QSpinBox(parent=self)
             self.label_selector.setFrame(False)
             self.label_selector.setFont(self._font)
             self.label_selector.setMaximumWidth(35)
@@ -72,13 +73,13 @@ class LabelLayer(LayerBase):
             self.label_selector.setValue(current_label)
             self._layout.addWidget(self.label_selector, 3, 1, 1, 1)
 
-            self.brush_label = QLabel(parent=self)
+            self.brush_label = QtGui.QLabel(parent=self)
             self.brush_label.setAlignment(Qt.AlignRight)
             self.brush_label.setFont(self._font)
             self.brush_label.setText("Brush:")
             self._layout.addWidget(self.brush_label, 3, 2, 1, 1)
 
-            self.brush_selector = QSpinBox(parent=self)
+            self.brush_selector = QtGui.QSpinBox(parent=self)
             self.brush_selector.setFrame(False)
             self.brush_selector.setFont(self._font)
             self.brush_selector.setMaximumWidth(35)

@@ -1,5 +1,5 @@
 import pyqtgraph as pg
-from PyQt5.QtCore import QSize
+from pyqtgraph.Qt import QtCore
 from pyqtgraph.Qt import QtCore, QtGui
 
 _nameToPattern = {
@@ -79,7 +79,7 @@ class LayerViewWidget(QtGui.QWidget):
     def show_settings(self):
         print("settings")
         self.settings_widget.show()
-        self.settings_widget.resize(QSize(500, 300))
+        self.settings_widget.resize(QtCore.QSize(500, 300))
         self.settings_widget.move(
             self.window().frameGeometry().topLeft() + self.window().rect().center() - self.settings_widget.rect().center())
 

@@ -1,27 +1,26 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFontMetrics, QFont
-from PyQt5.QtWidgets import QWidget, QLabel, QSpinBox
-from pyqtgraph.Qt import QtGui
+# from PyQt5.QtGui import QFontMetrics, QFont
+# from PyQt5.QtWidgets import QWidget, QLabel, QSpinBox
+from pyqtgraph.Qt import QtGui, QtCore, QtWidgets
 
 from ..widgets import TripleToggleEye, FractionSelectionBar, GradientWidget
 
 
-class LayerItemWidget(QWidget):
+class LayerItemWidget(QtWidgets.QWidget):
 
     def __init__(self, name=None, parent=None, add_gradient_widgtet=False,
                  channel_selector=False, add_as_rgb_button=False):
         super(LayerItemWidget, self).__init__(parent=parent)
         # self._layer = None
 
-        self._font = QFont(QFont().defaultFamily(), 9)
-        self._fm = QFontMetrics(self._font)
+        self._font = QtGui.QFont(QtGui.QFont().defaultFamily(), 9)
+        self._fm = QtGui.QFontMetrics(self._font)
         self.bar = FractionSelectionBar(initial_fraction=1.)
         self.bar.setFixedHeight(10)
-        self.name_label = QLabel(parent=self)
+        self.name_label = QtGui.QLabel(parent=self)
         self.name_label.setFont(self._font)
         self.name_label.setText(str(name))
-        self.opacity_label = QLabel(parent=self)
-        self.opacity_label.setAlignment(Qt.AlignRight)
+        self.opacity_label = QtGui.QLabel(parent=self)
+        self.opacity_label.setAlignment(QtCore.Qt.AlignRight)
         self.opacity_label.setFont(self._font)
         self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
@@ -30,11 +29,11 @@ class LayerItemWidget(QWidget):
         self.toggle_eye.setFixedWidth(35)
         self.toggle_eye.setToolTip("Visibility")
 
-        self.channel_selector = QSpinBox(parent=self)
+        self.channel_selector = QtGui.QSpinBox(parent=self)
         self.channel_selector.setFrame(False)
         self.channel_selector.setFont(self._font)
         self.channel_selector.setMaximumWidth(35)
-        self.channel_selector.setAlignment(Qt.AlignRight)
+        self.channel_selector.setAlignment(QtCore.Qt.AlignRight)
         self.channel_selector.setToolTip("Channel")
         self.channel_selector.setVisible(channel_selector)
 

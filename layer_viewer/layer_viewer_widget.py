@@ -1,5 +1,4 @@
-# from pyqtgraph.Qt import QtGui
-from PyQt5 import QtGui
+from pyqtgraph.Qt import QtGui
 from pyqtgraph.dockarea import *
 
 from .layer_ctrl_widget import LayerCtrlWidget
