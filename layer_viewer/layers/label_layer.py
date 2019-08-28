@@ -11,6 +11,7 @@ from .layer_base import LayerBase
 from ..distinct_colors import *
 from ..pixel_path import *
 from ..widgets import TripleToggleEye, FractionSelectionBar
+from pyqtgraph.Qt import QtCore
 
 
 class LabelLayer(LayerBase):
@@ -30,7 +31,7 @@ class LabelLayer(LayerBase):
             self.name_label.setFont(self._font)
             self.name_label.setText(str(name))
             self.opacity_label = QtGui.QLabel(parent=self)
-            self.opacity_label.setAlignment(Qt.AlignRight)
+            self.opacity_label.setAlignment(QtCore.Qt.AlignRight)
             self.opacity_label.setFont(self._font)
             self.opacity_label.setText(u"\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction())))
 
@@ -56,7 +57,7 @@ class LabelLayer(LayerBase):
             self._layout.addWidget(self.bar, 1, 1, 1, 2)
 
             self.label_label = QtGui.QLabel(parent=self)
-            self.label_label.setAlignment(Qt.AlignRight)
+            self.label_label.setAlignment(QtCore.Qt.AlignRight)
             self.label_label.setFont(self._font)
             self.label_label.setText("Label:")
             self._layout.addWidget(self.label_label, 3, 0, 1, 1)
@@ -65,7 +66,7 @@ class LabelLayer(LayerBase):
             self.label_selector.setFrame(False)
             self.label_selector.setFont(self._font)
             self.label_selector.setMaximumWidth(35)
-            self.label_selector.setAlignment(Qt.AlignRight)
+            self.label_selector.setAlignment(QtCore.Qt.AlignRight)
             self.label_selector.setToolTip("Label")
             self.label_selector.setVisible(True)
             self.label_selector.setMinimum(0)
@@ -74,7 +75,7 @@ class LabelLayer(LayerBase):
             self._layout.addWidget(self.label_selector, 3, 1, 1, 1)
 
             self.brush_label = QtGui.QLabel(parent=self)
-            self.brush_label.setAlignment(Qt.AlignRight)
+            self.brush_label.setAlignment(QtCore.Qt.AlignRight)
             self.brush_label.setFont(self._font)
             self.brush_label.setText("Brush:")
             self._layout.addWidget(self.brush_label, 3, 2, 1, 1)
@@ -83,7 +84,7 @@ class LabelLayer(LayerBase):
             self.brush_selector.setFrame(False)
             self.brush_selector.setFont(self._font)
             self.brush_selector.setMaximumWidth(35)
-            self.brush_selector.setAlignment(Qt.AlignRight)
+            self.brush_selector.setAlignment(QtCore.Qt.AlignRight)
             self.brush_selector.setToolTip("Brush")
             self.brush_selector.setVisible(True)
             self.brush_selector.setMinimum(0)
