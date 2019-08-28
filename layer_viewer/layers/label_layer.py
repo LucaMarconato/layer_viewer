@@ -59,7 +59,7 @@ class LabelLayer(LayerBase):
                 "\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction()))
             )
 
-            self.toggleEye = TrippleToggleEye(parent=self)
+            self.toggleEye = TripleToggleEye(parent=self)
             self.toggleEye.setActive(True)
             self.toggleEye.setFixedWidth(35)
             self.toggleEye.setToolTip("Visibility")
