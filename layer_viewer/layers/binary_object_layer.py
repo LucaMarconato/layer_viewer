@@ -1,7 +1,24 @@
+from  . layer_base import LayerBase
+from .. widgets import TrippleToggleEye, ToggleEye, FractionSelectionBar
+from .. pixel_path import *
+from . layer_controller import *
+import pyqtgraph as pg
+import os
+from pyqtgraph.Qt import QtCore, QtGui
 import numpy
 
-from .layer_base import LayerBase
-from .layer_controller import *
+###############################################################################
+from builtins import range
+#from past.utils import old_div
+import warnings
+from PyQt5.QtCore import pyqtSignal, Qt, QEvent, QRect, QSize, QTimer, QPoint, QItemSelectionModel
+from PyQt5.QtGui import QPainter, QFontMetrics, QFont, QPalette, QMouseEvent, QPixmap
+from PyQt5.QtWidgets import QStyledItemDelegate, QWidget, QListView, QStyle, \
+                            QLabel, QGridLayout, QSpinBox, QApplication
+
+
+
+
 
 
 class BinaryObjectLayer(LayerBase):
@@ -11,10 +28,10 @@ class BinaryObjectLayer(LayerBase):
         if color is None:
             color = numpy.random.randint(low=0, high=255, size=3)
 
-        lut = numpy.zeros([2, 4])
-        lut[:, 0:3] = color
-        lut[:, 3] = 255
-        lut[0, 3] = 0
+        lut = numpy.zeros([2,4])
+        lut[:,0:3] = color
+        lut[:,3] = 255
+        lut[0,3] = 0
 
         self.lut = lut.astype('int64')
 
@@ -22,7 +39,11 @@ class BinaryObjectLayer(LayerBase):
 
         self.m_image_item = pg.ImageItem()
         if self.m_data is not None:
+
             self.m_image_item.setImage(self._apply_lut(self.m_data), autoLevels=False)
+
+
+
 
         self.m_ctrl_widget = LayerItemWidget(name=self.name, add_gradient_widgtet=False)
         # self.m_ctrl_widget.setLut(lut)
@@ -36,18 +57,19 @@ class BinaryObjectLayer(LayerBase):
     def ctrl_widget(self):
 
         w = self.m_ctrl_widget
-        w.toggle_eye.setActive(True)
+        w.toggleEye.setActive(True)
 
-        def toogle_eye_changed(state):
-            if self.viewer.m_exclusive_layer is not None:
-                self.viewer.m_exclusive_layer.setVisible(True)
-                self.viewer.m_exclusive_layer = None
+        def toogleEyeChanged(state):
+            if self.viewer.m_exlusive_layer is not None:
+                self.viewer.m_exlusive_layer.setVisible(True)
+                self.viewer.m_exlusive_layer = None
             if state == 2:
-                self.viewer.show_and_hide_others(self.name)
+                 self.viewer.showAndHideOthers(self.name)
             else:
                 self.setVisible(bool(state))
 
-        w.toggle_eye.stateChanged.connect(toogle_eye_changed)
+
+        w.toggleEye.stateChanged.connect(toogleEyeChanged)
 
         w.bar.fractionChanged.connect(self.setOpacity)
 
@@ -62,15 +84,15 @@ class BinaryObjectLayer(LayerBase):
         self.m_image_item_group.setOpacity(opacity)
 
     def setVisible(self, visible):
-        self.m_ctrl_widget.toggle_eye.setState(visible)
+        self.m_ctrl_widget.toggleEye.setState(visible)
         self.m_image_item.setVisible(visible)
+
 
     def setZValue(self, z):
         self.m_image_item.setZValue(z)
 
-    def update_data(self, image):
-        self.m_data = image
+    def updateData(self, image):
         self.m_image_item.updateImage(self._apply_lut(image))
 
     def setData(self, image):
-        self.m_image_item.setImage(self._apply_lut(image), autoLevels=False)
+        self.m_image_item.setImage(self._apply_lut(image),autoLevels=False)

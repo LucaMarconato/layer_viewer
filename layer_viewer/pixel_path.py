@@ -1,9 +1,10 @@
 import numpy
-from pyqtgraph.Qt import QtGui
-from skimage.draw import line as skimage_line
-# from bresenham import bresenham
-from skimage.morphology import dilation
+from skimage.morphology import erosion, dilation, opening, closing, white_tophat
+from skimage.morphology import black_tophat, skeletonize, convex_hull_image
 from skimage.morphology import disk
+from skimage.draw import line as skimage_line
+
+from pyqtgraph.Qt import QtCore, QtGui
 
 
 def bresenham_line(pstart, pstop):
@@ -14,12 +15,15 @@ def bresenham_line(pstart, pstop):
     x1, y1 = pstop
     x1 = int(x1)
     y1 = int(y1)
-    rr, cc = skimage_line(x0, y0, x1, y1)
-    return [(r, c) for r, c in zip(rr, cc)]
+    rr,cc = skimage_line(x0, y0, x1, y1)
+    return [(r,c) for r,c in zip(rr,cc)]
+
 
 
 class PixelPath(object):
+
     def __init__(self):
+
         self._path = []
         self._pix_path = []
         self.draw_kernels = dict()
@@ -43,6 +47,7 @@ class PixelPath(object):
             self._pix_path.append(pos)
             self.qpath.moveTo(float(pos[0]), float(pos[1]))
 
+
     def insert_to_image(self, label_image, label, rad):
         path = numpy.array(self._pix_path)
         int_path = path.astype('int')
@@ -51,10 +56,11 @@ class PixelPath(object):
             wx = int_path[:, 0]
             wy = int_path[:, 1]
         else:
-            # bounding box
+
+            # bouning box
             bb_min = numpy.min(int_path, axis=0)
             bb_max = numpy.max(int_path, axis=0)
-            bb_size = bb_max - bb_min + 1 + 2 * rad
+            bb_size = bb_max - bb_min + 1 + 2*rad
 
             # remove min
             int_path -= bb_min
@@ -64,7 +70,7 @@ class PixelPath(object):
             label_patch = numpy.zeros(bb_size, dtype='uint8')
 
             # write to label patch
-            label_patch[int_path[:, 0], int_path[:, 1]] = 2
+            label_patch[int_path[:,0], int_path[:,1]] = 2
 
             # dilate
             if rad not in self.draw_kernels:
@@ -77,7 +83,7 @@ class PixelPath(object):
             wx += bb_min[0] - rad
             wy += bb_min[1] - rad
 
-        wx = numpy.clip(wx, 0, label_image.shape[0] - 1)
-        wy = numpy.clip(wy, 0, label_image.shape[1] - 1)
+        wx = numpy.clip(wx, 0, label_image.shape[0]-1)
+        wy = numpy.clip(wy, 0, label_image.shape[1]-1)
         label_image[wx, wy] = label
         return label_image

@@ -1,21 +1,28 @@
-from pyqtgraph.Qt import QtCore
-from pyqtgraph.parametertree import Parameter, ParameterTree
+import pyqtgraph as pg
+from pyqtgraph.Qt import QtCore, QtGui
+import pyqtgraph.parametertree.parameterTypes as pTypes
+from pyqtgraph.parametertree import Parameter, ParameterTree, ParameterItem, registerParameterType
+
 
 
 class SettingsWidget(ParameterTree):
     def __init__(self, *args, **kwargs):
         super(SettingsWidget, self).__init__(*args, **kwargs)
 
-        self.qtSettings = QtCore.QSettings('layer_viewer', 'settings')
 
-        use_open_gl = self.qtSettings.value('Use OpenGL', True)
-        use_aa = self.qtSettings.value('Use Anti-Aliasing', False)
-        pattern = self.qtSettings.value('bg-type', 'LinearGradientPattern')
+
+        self.qtSettings = QtCore.QSettings('layer_viewer','settings')
+
+
+
+        useOpenGl = self.qtSettings.value('Use OpenGL',True)
+        useAA = self.qtSettings.value('Use Anti-Aliasing',False)
+        pattern = self.qtSettings.value('bg-type','LinearGradientPattern')
 
         params = [
             {'name': 'Global Options', 'type': 'group', 'children': [
-                {'name': 'Use OpenGL', 'type': 'bool', 'value': use_open_gl, 'tip': 'can lead to speedups if enabled'},
-                {'name': 'Use Anti-Aliasing', 'type': 'bool', 'value': use_aa},
+                {'name': 'Use OpenGL', 'type': 'bool', 'value': useOpenGl, 'tip': "can lead to speedups if enabled"},
+                {'name': 'Use Anti-Aliasing', 'type': 'bool', 'value': useAA},
             ]},
             {'name': 'ViewBox Options', 'type': 'group', 'children': [
                 {'name': 'ViewBox Background', 'type': 'group', 'children': [
@@ -41,8 +48,8 @@ class SettingsWidget(ParameterTree):
                         ],
                         'value': pattern
                     },
-                    {'name': 'bg-color 1', 'type': 'color', 'value': (180,) * 3, 'tip': 'background color 1'},
-                    {'name': 'bg-color 2', 'type': 'color', 'value': (60,) * 3, 'tip': 'background color 2'},
+                    {'name': 'bg-color 1', 'type': 'color', 'value': (180,)*3, 'tip': "background color 1"},
+                    {'name': 'bg-color 2', 'type': 'color', 'value': (60 ,)*3, 'tip': "background color 2"},
                 ]},
                 {'name': 'Show Axis', 'type': 'bool', 'value': False},
             ]},
@@ -59,7 +66,7 @@ class SettingsWidget(ParameterTree):
 
         self.setParameters(self.p, showTop=False)
         self.setWindowTitle('Layer Viewer Settings')
-        # TODO: the parameters are not saved beyond the exit of the program
+        # TODO: the parameters are not saved beyond the exit of the program, do that
 
     def __getitem__(self, key):
         return self.p[key]

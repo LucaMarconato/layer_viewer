@@ -1,6 +1,6 @@
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore
 from pyqtgraph.Qt import QtCore, QtGui
+
 
 _nameToPattern = {
     'SolidPattern': QtCore.Qt.SolidPattern,
@@ -21,8 +21,7 @@ _nameToPattern = {
     'DiagCrossPattern': QtCore.Qt.DiagCrossPattern
 }
 
-
-def get_qt_pattern(name):
+def getQtPattern(name):
     return _nameToPattern[str(name)]
 
 
@@ -32,76 +31,85 @@ class MyViewBox(pg.ViewBox):
 
     def keyPressEvent(self, ev):
         pass
-        # ev.ignore()
-
+        #ev.ignore()
 
 class LayerViewWidget(QtGui.QWidget):
-    def __init__(self, settings_widget, parent=None):
+    def __init__(self,settings_widget, parent=None):
         QtGui.QWidget.__init__(self, parent)
 
-        self.graph_view = pg.GraphicsView()
-        self.graph_view_layout = QtGui.QGraphicsGridLayout()
-        self.graph_view.centralWidget.setLayout(self.graph_view_layout)
 
-        # self.setPolicy(self.graph_view,QtGui.QSizePolicy.Expanding)
+        self.graphView       = pg.GraphicsView()
+        self.graphViewLayout = QtGui.QGraphicsGridLayout()
+        self.graphView.centralWidget.setLayout(self.graphViewLayout)
+
+        #self.setPolicy(self.graphView,QtGui.QSizePolicy.Expanding)
+
 
         # view box
         self.view_box = MyViewBox()
         self.view_box.setAspectLocked(True)
         # add view box to graph view layout
-        self.graph_view_layout.addItem(self.view_box, 0, 0)
+        self.graphViewLayout.addItem(self.view_box,0,0)
         self.hbox = QtGui.QHBoxLayout()
         self.setLayout(self.hbox)
-        self.hbox.addWidget(self.graph_view)
+        self.hbox.addWidget(self.graphView)
 
         # flip the view box
         self.view_box.invertY(True)
 
+
         self.settings_widget = settings_widget
 
-        def bg_change(*args, **kwargs):
-            # print("waerawe")
-            self.set_background()
+        def bg_change(*args,**kwargs):
+            #print("waerawe")
+            self.setBackground()
 
-        bg_params = settings_widget.p.param('ViewBox Options', 'ViewBox Background')
 
-        # too lazy for recursion:
+        bg_params = settings_widget.p.param('ViewBox Options','ViewBox Background')
+
+        # Too lazy for recursion:
         for child in bg_params.children():
             child.sigValueChanged.connect(bg_change)
             for ch2 in child.children():
                 ch2.sigValueChanged.connect(bg_change)
 
-        self.set_background()
+
+        self.setBackground()
+
+
+
 
         s = self.view_box.menu.addAction('Settings')
-        s.triggered.connect(self.show_settings)
+        s.triggered.connect(self.showSettings)
 
-    def show_settings(self):
+
+    def showSettings(self):
         print("settings")
         self.settings_widget.show()
         self.settings_widget.resize(QtCore.QSize(500, 300))
         self.settings_widget.move(
             self.window().frameGeometry().topLeft() + self.window().rect().center() - self.settings_widget.rect().center())
 
-    def set_background(self):
-        self.bg_type = self.settings_widget.p[('ViewBox Options', 'ViewBox Background', 'bg-type')]
-        self.bg_color1 = self.settings_widget.p[('ViewBox Options', 'ViewBox Background', 'bg-color 1')]
-        self.bg_color2 = self.settings_widget.p[('ViewBox Options', 'ViewBox Background', 'bg-color 2')]
+    def setBackground(self):
+
+        self.bgType  = self.settings_widget.p[('ViewBox Options','ViewBox Background','bg-type')]
+        self.bgColor1 = self.settings_widget.p[('ViewBox Options','ViewBox Background','bg-color 1')]
+        self.bgColor2 = self.settings_widget.p[('ViewBox Options','ViewBox Background','bg-color 2')]
 
         bg = self.view_box.background
         self.view_box.background.show()
         bg.setVisible(True)
-        if self.bg_type == 'LinearGradientPattern':
-            g = QtGui.QLinearGradient(
-                QtCore.QRectF(self.rect()).topLeft(),
-                QtCore.QRectF(self.rect()).bottomLeft()
+        if self.bgType == 'LinearGradientPattern':
+            g =  QtGui.QLinearGradient(
+                                       QtCore.QRectF(self.rect()).topLeft(),
+                                       QtCore.QRectF(self.rect()).bottomLeft()
             )
-            g.setColorAt(0, self.bg_color1)
-            g.setColorAt(1, self.bg_color2)
+            g.setColorAt(0, self.bgColor1);
+            g.setColorAt(1, self.bgColor2);
             brush = QtGui.QBrush(g)
         else:
             brush = QtGui.QBrush()
-            brush.setStyle(get_qt_pattern(self.bg_type))
-            brush.setColor(self.bg_color1)
+            brush.setStyle(getQtPattern(self.bgType))
+            brush.setColor(self.bgColor1)
 
         bg.setBrush(brush)

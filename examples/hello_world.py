@@ -27,23 +27,23 @@ viewer.setWindowTitle('LayerViewer')
 viewer.show()
 
 layer = MultiChannelImageLayer(name='img', data=image[...])
-viewer.add_layer(layer=layer)
+viewer.addLayer(layer=layer)
 
 
 labels = numpy.zeros(image.shape[0:2], dtype='uint8')
 label_layer = LabelLayer(name='labels', data=None)
-viewer.add_layer(layer=label_layer)
-viewer.set_data('labels', image=labels)
+viewer.addLayer(layer=label_layer)
+viewer.setData('labels',image=labels)
 
 
 # connect stuff
 def foo(layer):
-    print(labels)
+	print(labels)
 label_layer.labelsChangedSignal.connect(foo)
 
 
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
-    import sys
-    if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-        QtGui.QApplication.instance().exec_()
+	import sys
+	if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
+		QtGui.QApplication.instance().exec_()
