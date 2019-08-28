@@ -7,37 +7,32 @@ from .layer_ctrl_widget import LayerCtrlWidget
 from .settings_widget import SettingsWidget
 
 
-class LayerViewerWidget(QtGui.QWidget):
-    def __init__(self, gui_stlye="splitter", parent=None):
-        QtGui.QWidget.__init__(self, parent)
 
-        self.m_hbox = QtGui.QHBoxLayout()
-        self.setLayout(self.m_hbox)
 
-        self.settings_widget = SettingsWidget()
+class LayerViewerObject(object):
+    def __init__(self, parent=None):
+        #sQtCore.QObject.__init__(self, parent)
+   
+        self.m_settings_widget = SettingsWidget()
         self.m_layer_view_widget = LayerViewWidget(settings_widget=self.settings_widget)
         self.m_layer_ctrl_widget = LayerCtrlWidget()
 
-        if gui_stlye == "dock":
-
-            self.area = DockArea()
-            self.m_hbox.addWidget(self.area)
-            d_view = Dock("Viewer", size=(500, 500))
-            d_ctrl = Dock("Ctrl", size=(200, 500))
-            d_view.addWidget(self.m_layer_view_widget)
-            d_ctrl.addWidget(self.m_layer_ctrl_widget)
-            self.area.addDock(d_view)
-            self.area.addDock(d_ctrl, "right", d_view)
-
-        elif gui_stlye == "splitter":
-            self.splitter = QtGui.QSplitter()
-            self.m_hbox.addWidget(self.splitter)
-            self.splitter.addWidget(self.m_layer_view_widget)
-            self.splitter.addWidget(self.m_layer_ctrl_widget)
 
         self.m_layers = dict()
-
         self.m_exlusive_layer = None
+        
+    @property
+    def layer_view_widget(self):
+        return self.m_layer_view_widget
+
+    @property
+    def layer_ctrl_widget(self):
+        return self.m_layer_ctrl_widget
+
+    @property
+    def settings_widget(self):
+        return self.m_settings_widget
+
 
     @property
     def view_box(self):
@@ -98,3 +93,36 @@ class LayerViewerWidget(QtGui.QWidget):
                 self.m_exlusive_layer = layer
             else:
                 layer.setVisible(False)
+
+
+
+
+
+class LayerViewerWidget(QtGui.QWidget, LayerViewerObject):
+    def __init__(self, gui_stlye="splitter", parent=None):
+        QtGui.QWidget.__init__(self, parent)
+
+        self.m_hbox = QtGui.QHBoxLayout()
+        self.setLayout(self.m_hbox)
+
+        self.layer_viewer_object = LayerViewerObject()
+
+
+        if gui_stlye == "dock":
+
+            self.area = DockArea()
+            self.m_hbox.addWidget(self.area)
+            d_view = Dock("Viewer", size=(500, 500))
+            d_ctrl = Dock("Ctrl", size=(200, 500))
+            d_view.addWidget(self.m_layer_view_widget)
+            d_ctrl.addWidget(self.m_layer_ctrl_widget)
+            self.area.addDock(d_view)
+            self.area.addDock(d_ctrl, "right", d_view)
+
+        elif gui_stlye == "splitter":
+            self.splitter = QtGui.QSplitter()
+            self.m_hbox.addWidget(self.splitter)
+            self.splitter.addWidget(self.m_layer_view_widget)
+            self.splitter.addWidget(self.m_layer_ctrl_widget)
+
+
