@@ -59,7 +59,7 @@ class LabelLayer(LayerBase):
                 "\u03B1=%0.1f%%" % (100.0 * (self.bar.fraction()))
             )
 
-            self.toggleEye = TripleToggleEye(parent=self)
+            self.toggleEye = TrippleToggleEye(parent=self)
             self.toggleEye.setActive(True)
             self.toggleEye.setFixedWidth(35)
             self.toggleEye.setToolTip("Visibility")
@@ -205,7 +205,6 @@ class LabelLayer(LayerBase):
                         self.label_layer.setCurrentLabel(0)
                         event.accept()
 
-
     # we need a custom graphics item group to handle key interaction
     class MyQGraphicsItemGroup(QtGui.QGraphicsItemGroup):
         keyPressed = QtCore.pyqtSignal(QtCore.QEvent)
@@ -226,7 +225,6 @@ class LabelLayer(LayerBase):
         self.lut = get_label_lut()
 
         self.m_label_data = data
-
 
         self.current_label = 1
         self.disk_rad = 1
@@ -258,22 +256,6 @@ class LabelLayer(LayerBase):
         # self.m_ctrl_widget.setLut(lut)
         self.viewer = None
 
-    def _set_pen(self):
-        fac = [1,3][self.current_label == 0]
-        if self.current_label == 0:
-            color = (0,0,0, 255.0 * 0.7)
-        else:
-            color = self.lut[self.current_label,:]
-        p = pg.mkPen(color=color, width=fac*self.disk_rad*2 + 1,cosmetic=False)
-        p.setCapStyle(QtCore.Qt.RoundCap)
-        self.m_temp_path.setPen(p)
-
-    def setNumClasses(self, num_classes):
-        self.m_ctrl_widget.setNumClasses(num_classes)
-
-
-    def ctrl_widget(self):
-        #print("ctrl")
         w = self.m_ctrl_widget
 
         # toggle eye
@@ -297,7 +279,6 @@ class LabelLayer(LayerBase):
         def onLabelChange(label):
             self.current_label = label
             self._set_pen()
-        w.labelSelector.valueChanged.connect(onLabelChange)
 
         self.m_ctrl_widget.labelSelector.valueChanged.connect(onLabelChange)
 

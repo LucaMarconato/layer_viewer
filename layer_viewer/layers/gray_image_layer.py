@@ -35,8 +35,6 @@ from PyQt5.QtWidgets import (
 )
 
 
-
-
 class GrayImageLayer(LayerBase):
     def __init__(
         self,
@@ -93,18 +91,6 @@ class GrayImageLayer(LayerBase):
 
     def get_image_item(self):
         return self.m_image_item
-
-    def setOpacity(self, opacity):
-        self.m_ctrl_widget.setFraction(opacity)
-        self.m_image_item.setOpacity(opacity)
-
-    def setVisible(self, visible):
-        self.m_ctrl_widget.toggleEye.setState(visible)
-        self.m_image_item.setVisible(visible)
-
-
-    def setZValue(self, z):
-        self.m_image_item.setZValue(z)
 
     def updateData(self, image):
         self.m_data = image

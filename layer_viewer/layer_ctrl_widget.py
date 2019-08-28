@@ -30,8 +30,6 @@ class DrangAndDropListWidget(QtGui.QListWidget):
             layer.setZValue(i)
 
 
-
-
 class LayerCtrlWidget(QtGui.QWidget):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
@@ -49,10 +47,7 @@ class LayerCtrlWidget(QtGui.QWidget):
         qIndex = self.list_widget.indexFromItem(_list_widget_item)
         self.list_widget.model().removeRow(qIndex.row())
 
-
-
     def add_layer(self, layer):
-
 
         w = layer.ctrl_widget()
         w.toggleEye.setActive(True)

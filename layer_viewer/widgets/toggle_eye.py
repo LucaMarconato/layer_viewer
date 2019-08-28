@@ -76,8 +76,6 @@ class TripleToggleEye(QtGui.QLabel):
         if state != self._state:
             self._state = state
             self.setPixmap(self._state_to_pixmap[self._state])
-            # TODO: test the following line
-            self.stateChanged.emit(self._state)
 
     def setActive(self, binary_state):
         self.setState(bool(binary_state))

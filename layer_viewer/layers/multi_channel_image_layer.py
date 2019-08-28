@@ -84,7 +84,6 @@ class MultiChannelImageLayer(LayerBase):
         if self.m_data is not None:
             w.channelSelector.setRange(0, self.m_data.shape[2] - 1)
         w.toggleEye.setActive(True)
-        self.update_rgb_enabled()
 
         def toogleEyeChanged(state):
             if self.viewer.m_exlusive_layer is not None:
@@ -178,8 +177,6 @@ class MultiChannelImageLayer(LayerBase):
                     levels=self.m_levels,
                     autoHistogramRange=self.m_autoHistogramRange,
                 )
-                self.m_image_item.setImage(image[...,self.current_channel], autoLevels=self.m_autoLevels,
-                        levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
         self.update_rgb_enabled()
 
     def update_rgb_enabled(self):

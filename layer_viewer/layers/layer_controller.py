@@ -1,4 +1,4 @@
-from .. widgets import TripleToggleEye, ToggleEye, FractionSelectionBar, GradientWidget
+from ..widgets import TripleToggleEye, ToggleEye, FractionSelectionBar, GradientWidget
 import pyqtgraph as pg
 import os
 from pyqtgraph.Qt import QtCore, QtGui

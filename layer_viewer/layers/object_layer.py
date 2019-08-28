@@ -91,7 +91,6 @@ class ObjectLayer(LayerBase):
         return self.m_image_item
 
     def updateData(self, image):
-        self.m_data = image
         self.m_image_item.updateImage(self._apply_lut(image))
 
     def setData(self, image):
