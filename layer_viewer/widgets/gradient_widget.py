@@ -1,7 +1,6 @@
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore
 
-
 # custom gradient widget with custom sizes
 class GradientWidget(pg.GradientWidget):
     def __int__(self, *args, **kwargs):

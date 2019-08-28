@@ -1,7 +1,7 @@
-from  . layer_base import LayerBase
-from .. widgets import TrippleToggleEye, ToggleEye, FractionSelectionBar
-from .. pixel_path import *
-from . layer_controller import *
+from .layer_base import LayerBase
+from ..widgets import TrippleToggleEye, ToggleEye, FractionSelectionBar
+from ..pixel_path import *
+from .layer_controller import *
 import pyqtgraph as pg
 import os
 from pyqtgraph.Qt import QtCore, QtGui
@@ -9,18 +9,36 @@ import numpy
 
 ###############################################################################
 from builtins import range
-#from past.utils import old_div
+
+# from past.utils import old_div
 import warnings
-from PyQt5.QtCore import pyqtSignal, Qt, QEvent, QRect, QSize, QTimer, QPoint, QItemSelectionModel
+from PyQt5.QtCore import (
+    pyqtSignal,
+    Qt,
+    QEvent,
+    QRect,
+    QSize,
+    QTimer,
+    QPoint,
+    QItemSelectionModel,
+)
 from PyQt5.QtGui import QPainter, QFontMetrics, QFont, QPalette, QMouseEvent, QPixmap
-from PyQt5.QtWidgets import QStyledItemDelegate, QWidget, QListView, QStyle, \
-                            QLabel, QGridLayout, QSpinBox, QApplication
-
-
+from PyQt5.QtWidgets import (
+    QStyledItemDelegate,
+    QWidget,
+    QListView,
+    QStyle,
+    QLabel,
+    QGridLayout,
+    QSpinBox,
+    QApplication,
+)
 
 
 class RGBImageLayer(LayerBase):
-    def __init__(self, name, data=None, autoLevels=True, levels=None, autoHistogramRange=False):
+    def __init__(
+        self, name, data=None, autoLevels=True, levels=None, autoHistogramRange=False
+    ):
         super(RGBImageLayer, self).__init__(name=name)
 
         self.m_data = data
@@ -29,38 +47,37 @@ class RGBImageLayer(LayerBase):
         self.m_autoHistogramRange = autoHistogramRange
         self.m_image_item = pg.ImageItem()
         if self.m_data is not None:
-            self.m_image_item.setImage(self.m_data, autoLevels=self.m_autoLevels,
-                levels=self.m_levels)
+            self.m_image_item.setImage(
+                self.m_data, autoLevels=self.m_autoLevels, levels=self.m_levels
+            )
 
-        self.m_ctrl_widget =  LayerItemWidget(name=self.name, add_gradient_widgtet=False)
+        self.m_ctrl_widget = LayerItemWidget(name=self.name, add_gradient_widgtet=False)
         self.viewer = None
 
-    def ctrl_widget(self):
-        #print("ctrl")
-        w = self.m_ctrl_widget
-        w.toggleEye.setActive(True)
+        self.m_ctrl_widget.toggleEye.setActive(True)
 
         def toogleEyeChanged(state):
             if self.viewer.m_exlusive_layer is not None:
                 self.viewer.m_exlusive_layer.setVisible(True)
                 self.viewer.m_exlusive_layer = None
             if state == 2:
-                 self.viewer.showAndHideOthers(self.name)
+                self.viewer.showAndHideOthers(self.name)
             else:
                 self.setVisible(bool(state))
 
+        self.m_ctrl_widget.toggleEye.stateChanged.connect(toogleEyeChanged)
+        self.m_ctrl_widget.bar.fractionChanged.connect(self.setOpacity)
+        self.m_ctrl_widget.layer = self
 
-        w.toggleEye.stateChanged.connect(toogleEyeChanged)
-        w.bar.fractionChanged.connect(self.setOpacity)
-        w.layer = self
-        return w
+    def ctrl_widget(self):
+        return self.m_ctrl_widget
 
     def get_image_item(self):
         return self.m_image_item
 
     def setOpacity(self, opacity):
         self.m_ctrl_widget.setFraction(opacity)
-        #self.m_ctrl_widget.bar.update()
+        # self.m_ctrl_widget.bar.update()
         self.m_image_item.setOpacity(opacity)
 
     def setVisible(self, visible):
@@ -75,5 +92,9 @@ class RGBImageLayer(LayerBase):
         self.m_image_item.updateImage(image)
 
     def setData(self, image):
-        self.m_image_item.setImage(image, autoLevels=self.m_autoLevels,
-                levels=self.m_levels, autoHistogramRange=self.m_autoHistogramRange)
+        self.m_image_item.setImage(
+            image,
+            autoLevels=self.m_autoLevels,
+            levels=self.m_levels,
+            autoHistogramRange=self.m_autoHistogramRange,
+        )
