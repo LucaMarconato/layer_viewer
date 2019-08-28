@@ -20,7 +20,7 @@ class LayerViewerObject(object):
 
         self.m_layers = dict()
         self.m_exlusive_layer = None
-        
+
     @property
     def layer_view_widget(self):
         return self.m_layer_view_widget
@@ -93,9 +93,6 @@ class LayerViewerObject(object):
                 self.m_exlusive_layer = layer
             else:
                 layer.setVisible(False)
-
-
-
 
 
 class LayerViewerWidget(QtGui.QWidget, LayerViewerObject):
