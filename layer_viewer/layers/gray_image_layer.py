@@ -103,3 +103,4 @@ class GrayImageLayer(LayerBase):
             levels=self.m_levels,
             autoHistogramRange=self.m_autoHistogramRange,
         )
+        self.m_data = image

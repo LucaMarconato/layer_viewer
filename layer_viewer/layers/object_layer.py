@@ -52,7 +52,6 @@ class ObjectLayer(LayerBase):
 
         self.m_image_item = pg.ImageItem()
         if self.m_data is not None:
-
             self.m_image_item.setImage(self._apply_lut(self.m_data), autoLevels=False)
 
         self.m_ctrl_widget = LayerItemWidget(name=self.name, add_gradient_widgtet=False)
@@ -92,6 +91,8 @@ class ObjectLayer(LayerBase):
 
     def updateData(self, image):
         self.m_image_item.updateImage(self._apply_lut(image))
+        self.m_data = image
 
     def setData(self, image):
         self.m_image_item.setImage(self._apply_lut(image), autoLevels=False)
+        self.m_data = image
