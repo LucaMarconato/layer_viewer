@@ -2,6 +2,10 @@
 layer_viewer
 =================================================
 
+Not maintaned anymore. But the code for the lasso/crosshair can be ported to Napari since it is written in PyQt.
+
+.. image:: screenshot.png
+
 .. image:: https://readthedocs.org/projects/layer_viewer/badge/?version=latest
         :target: http://layer_viewer.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status               
