@@ -18,7 +18,7 @@ distinct_colors = [
     (128, 0, 0),
     (170, 255, 195),
     (128, 128, 0),
-    (255, 215, 180)
+    (255, 215, 180),
 ]
 
 
@@ -28,5 +28,5 @@ def get_label_lut(lut_size=255):
     lut = lut.reshape([lut_size + 1, 4])
     lut[:, 3] = 255
     lut[0, 3] = 0
-    lut[1:1 + len(distinct_colors), 0:3] = numpy.array(distinct_colors)
+    lut[1 : 1 + len(distinct_colors), 0:3] = numpy.array(distinct_colors)
     return lut

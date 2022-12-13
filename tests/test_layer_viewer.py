@@ -13,15 +13,15 @@ def test_layer_viewer_widget(qtbot):
     viewer.setWindowTitle('LayerViewer')
 
     layer = MultiChannelImageLayer(name='img', data=image[...])
-    viewer.add_layer(layer=layer)
+    viewer.addLayer(layer=layer)
 
-    assert viewer.has_layer('img')
-    assert viewer.has_layer('labels') is False
+    assert viewer.hasLayer('img')
+    assert viewer.hasLayer('labels') is False
 
     labels = numpy.zeros(image.shape[0:2], dtype='uint8')
     label_layer = LabelLayer(name='labels', data=None)
-    viewer.add_layer(layer=label_layer)
-    viewer.set_data('labels', image=labels)
+    viewer.addLayer(layer=label_layer)
+    viewer.setData('labels', image=labels)
 
-    assert viewer.has_layer('img')
-    assert viewer.has_layer('labels')
+    assert viewer.hasLayer('img')
+    assert viewer.hasLayer('labels')

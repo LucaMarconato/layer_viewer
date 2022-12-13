@@ -1,9 +1,12 @@
 import numpy
-from pyqtgraph.Qt import QtGui
-from skimage.draw import line as skimage_line
+
 # from bresenham import bresenham
-from skimage.morphology import dilation
+from skimage.morphology import erosion, dilation, opening, closing, white_tophat
+from skimage.morphology import black_tophat, skeletonize, convex_hull_image
 from skimage.morphology import disk
+from skimage.draw import line as skimage_line
+
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 def bresenham_line(pstart, pstop):
@@ -20,6 +23,7 @@ def bresenham_line(pstart, pstop):
 
 class PixelPath(object):
     def __init__(self):
+
         self._path = []
         self._pix_path = []
         self.draw_kernels = dict()
@@ -45,13 +49,14 @@ class PixelPath(object):
 
     def insert_to_image(self, label_image, label, rad):
         path = numpy.array(self._pix_path)
-        int_path = path.astype('int')
+        int_path = path.astype("int")
 
         if rad == 0:
             wx = int_path[:, 0]
             wy = int_path[:, 1]
         else:
-            # bounding box
+
+            # bouning box
             bb_min = numpy.min(int_path, axis=0)
             bb_max = numpy.max(int_path, axis=0)
             bb_size = bb_max - bb_min + 1 + 2 * rad
@@ -61,7 +66,7 @@ class PixelPath(object):
             int_path += rad
 
             # label patch
-            label_patch = numpy.zeros(bb_size, dtype='uint8')
+            label_patch = numpy.zeros(bb_size, dtype="uint8")
 
             # write to label patch
             label_patch[int_path[:, 0], int_path[:, 1]] = 2

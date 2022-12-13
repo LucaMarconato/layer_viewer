@@ -1,5 +1,5 @@
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 # custom gradient widget with custom sizes
@@ -14,5 +14,5 @@ class GradientWidget(pg.GradientWidget):
         new_sh = QtCore.QSize(10, sh.height())
         return new_sh
 
-    def load_preset(self, name):
+    def loadPreset(self, name):
         self.item.loadPreset(name)
